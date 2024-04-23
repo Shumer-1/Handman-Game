@@ -10,10 +10,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
-import static org.example.Javafx.firstUserName;
-import static org.example.Javafx.root;
+import static org.example.Javafx.*;
 
 public class InputInfo {
+    static int counter = 0;
     public static void inputFirstName(){
         Label label = new Label("Введите ваше имя:");
         TextField textField = new TextField();
@@ -25,6 +25,7 @@ public class InputInfo {
         button.setLayoutX(20);
         button.setLayoutY(100);
         button.setOnAction(event -> {
+            ++counter;
             String inputText = textField.getText(); // Получаем текст из текстового поля
             firstUserName = inputText;
             label.setText(inputText + " взялся за дело!");
@@ -33,6 +34,12 @@ public class InputInfo {
             ObservableList<Node> children = root.getChildren();
             children.remove(button);
             children.remove(textField);
+            if (counter == 2){
+                addBody();
+                addHead();
+                addLegs();
+                addArms();
+            }
         });
         root.getChildren().add(label);
         root.getChildren().add(textField);
@@ -58,6 +65,13 @@ public class InputInfo {
             ObservableList<Node> children = root.getChildren();
             children.remove(button);
             children.remove(textField);
+            ++counter;
+            if (counter == 2){
+                addBody();
+                addHead();
+                addLegs();
+                addArms();
+            }
         });
         root.getChildren().add(label);
         root.getChildren().add(textField);

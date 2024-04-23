@@ -6,7 +6,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
@@ -14,13 +16,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 
 public class Javafx extends Application{
 
     static Pane root;
     static String firstUserName;
-    static int weight = 2000;
-    static int height = 1100;
+    static int weight = 1900;
+    static int height = 1070;
     static Scene scene;
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -31,22 +37,33 @@ public class Javafx extends Application{
             ObservableList<Node> children = root.getChildren();
             children.remove(0);
             children.remove(button);
-            mainWindow();
+            try {
+                beginWindow();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         });
         scene = new Scene(root, weight, height);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Game");
+        //primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreenExitHint("");
         primaryStage.show();
     }
-    public static void mainWindow(){
+    public static void beginWindow() throws FileNotFoundException {
+//        Image backgroundImage = new Image("src/main/resources/images/background.jpg");
+//
+//        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+//        root.setBackground(new Background(background));
+        ImageView screen = new ImageView();
+        InputStream inputStream = Javafx.class.getResourceAsStream("/images/background.jpg");
+        Image backgroundImage = new Image(inputStream);
+        screen.setImage(backgroundImage);
+        root.getChildren().add(screen);
         addGallows();
         Ellipse loop = addLoop();
         ObservableList<Node> children = root.getChildren();
-        children.remove(loop);
-        addBody();
-        addHead();
-        addLegs();
-        addArms();
+        //children.remove(loop);
         root.setStyle("-fx-background-color: lightblue;");
         InputInfo.inputFirstName();
         InputInfo.inputSecondName();
