@@ -14,6 +14,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -46,25 +47,27 @@ public class Javafx extends Application{
         scene = new Scene(root, weight, height);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Game");
-        //primaryStage.setFullScreen(true);
-        //primaryStage.setFullScreenExitHint("");
+        primaryStage.setFullScreen(true);
+        primaryStage.setFullScreenExitHint("");
         primaryStage.show();
     }
     public static void beginWindow() throws FileNotFoundException {
-//        Image backgroundImage = new Image("src/main/resources/images/background.jpg");
-//
-//        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-//        root.setBackground(new Background(background));
-        ImageView screen = new ImageView();
-        InputStream inputStream = Javafx.class.getResourceAsStream("/images/background.jpg");
-        Image backgroundImage = new Image(inputStream);
-        screen.setImage(backgroundImage);
-        root.getChildren().add(screen);
+        // jpg не ставится как фон почему-то. Проверяю png.
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        Image backgroundImage = new Image("/images/background.png");
+        //BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundSize backgroundSize = new BackgroundSize(screenWidth, screenHeight, false, false, false, false);
+        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+
+        root.setBackground(new Background(background));
+
+
         addGallows();
         Ellipse loop = addLoop();
         ObservableList<Node> children = root.getChildren();
         //children.remove(loop);
-        root.setStyle("-fx-background-color: lightblue;");
+        //root.setStyle("-fx-background-color: lightblue;");
         InputInfo.inputFirstName();
         InputInfo.inputSecondName();
     }
