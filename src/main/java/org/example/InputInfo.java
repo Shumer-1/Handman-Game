@@ -11,26 +11,62 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 import static org.example.Javafx.*;
+import static org.example.GameLogic.*;
 
 public class InputInfo {
     static int counter = 0;
+
+    public static void inputGameWord(){
+        Label label = new Label("Игрок " + firstUserName + " введите слово:");
+        label.setLayoutX(1000);
+        label.setLayoutY(100);
+        label.setTextFill(Color.WHITE);
+        label.setFont(Font.font("Arial", 32));
+
+        TextField textField = new TextField();
+        textField.setLayoutX(1000);
+        textField.setLayoutY(140);
+        textField.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 30px;");
+
+        Button button = new Button("Подтвердить");
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white;");
+        button.setLayoutY(204);
+        button.setLayoutX(1000);
+        button.setOnAction(event->{
+            gamaWord = textField.getText();
+
+            root.getChildren().remove(label);
+            root.getChildren().remove(textField);
+            root.getChildren().remove(button);
+        });
+        root.getChildren().add(label);
+        root.getChildren().add(textField);
+        root.getChildren().add(button);
+    }
+
+
     public static void inputFirstName(){
         Label label = new Label("Введите ваше имя:");
         TextField textField = new TextField();
         label.setLayoutX(20);
         label.setLayoutY(20);
+        label.setFont(Font.font("Arial", 20));
+        label.setTextFill(Color.WHITE);
+
         textField.setLayoutX(20);
         textField.setLayoutY(50);
+
         Button button = new Button("Подтвердить");
         button.setLayoutX(20);
         button.setLayoutY(100);
+
         button.setOnAction(event -> {
             ++counter;
             String inputText = textField.getText(); // Получаем текст из текстового поля
             firstUserName = inputText;
             label.setText(inputText + " взялся за дело!");
             label.setFont(Font.font("Arial", 20));
-            label.setTextFill(Color.CRIMSON);
+            label.setTextFill(Color.WHITE);
             ObservableList<Node> children = root.getChildren();
             children.remove(button);
             children.remove(textField);
@@ -39,6 +75,7 @@ public class InputInfo {
                 addHead();
                 addLegs();
                 addArms();
+                inputGameWord();
             }
         });
         root.getChildren().add(label);
@@ -51,6 +88,8 @@ public class InputInfo {
         TextField textField = new TextField();
         label.setLayoutX(700);
         label.setLayoutY(20);
+        label.setFont(Font.font("Arial", 20));
+        label.setTextFill(Color.WHITE);
         textField.setLayoutX(700);
         textField.setLayoutY(50);
         Button button = new Button("Подтвердить");
@@ -58,10 +97,10 @@ public class InputInfo {
         button.setLayoutY(100);
         button.setOnAction(event -> {
             String inputText = textField.getText(); // Получаем текст из текстового поля
-            firstUserName = inputText;
+            secondUserName = inputText;
             label.setText(inputText + " взялся за дело!");
             label.setFont(Font.font("Arial", 20));
-            label.setTextFill(Color.PURPLE);
+            label.setTextFill(Color.WHITE);
             ObservableList<Node> children = root.getChildren();
             children.remove(button);
             children.remove(textField);
@@ -71,6 +110,7 @@ public class InputInfo {
                 addHead();
                 addLegs();
                 addArms();
+                inputGameWord();
             }
         });
         root.getChildren().add(label);

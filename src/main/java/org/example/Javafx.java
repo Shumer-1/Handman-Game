@@ -1,5 +1,7 @@
 package org.example;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -7,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -16,16 +17,16 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 
 public class Javafx extends Application{
-
+    
     static Pane root;
     static String firstUserName;
+    static String secondUserName;
     static int weight = 1900;
     static int height = 1070;
     static Scene scene;
@@ -55,8 +56,9 @@ public class Javafx extends Application{
         // jpg не ставится как фон почему-то. Проверяю png.
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
+
         Image backgroundImage = new Image("/images/background.png");
-        //BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
         BackgroundSize backgroundSize = new BackgroundSize(screenWidth, screenHeight, false, false, false, false);
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
 
@@ -86,9 +88,19 @@ public class Javafx extends Application{
         button.setTextFill(Color.WHITE); // Устанавливаем цвет текста
         button.setScaleX(2); // Увеличиваем ширину кнопки в 2 раза
         button.setScaleY(2); // Увеличиваем высоту кнопки в 2 раза
+        //blink(button);
         root.getChildren().add(label);
         root.getChildren().add(button);
         return button;
+    }
+
+    public static void blink(Button button) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> button.setStyle("-fx-background-color: black")),
+                new KeyFrame(Duration.seconds(1), e -> button.setStyle("-fx-background-color: white"))
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     public static Ellipse addBody(){
@@ -125,8 +137,9 @@ public class Javafx extends Application{
         ellipse.setCenterY(420);
         ellipse.setRadiusX(25);
         ellipse.setRadiusY(30);
-        ellipse.setFill(Color.LIGHTBLUE);
-        ellipse.setStroke(Color.BLACK);
+        ellipse.setStrokeWidth(5);
+        ellipse.setFill(Color.TRANSPARENT);
+        ellipse.setStroke(Color.BROWN);
 
         root.getChildren().add(ellipse);
         return ellipse;
@@ -168,6 +181,8 @@ public class Javafx extends Application{
         rope.setStartY(320);
         rope.setEndX(550);
         rope.setEndY(395);
+        rope.setStrokeWidth(5);
+        rope.setStroke(Color.BROWN);
         root.getChildren().add(rope);
     }
     public static void addLegs(){
@@ -197,6 +212,7 @@ public class Javafx extends Application{
         leftArm.setStartX(514);
         leftArm.setEndX(489);
         leftArm.setEndY(560);
+        leftArm.setFill(Color.WHITE);
         root.getChildren().add(leftArm);
 
 
@@ -206,6 +222,7 @@ public class Javafx extends Application{
         rightArm.setStartX(586);
         rightArm.setEndX(611);
         rightArm.setEndY(560);
+        rightArm.setFill(Color.WHITE);
         root.getChildren().add(rightArm);
     }
     public static void main(String[] args) {
