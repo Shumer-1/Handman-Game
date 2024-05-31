@@ -1,11 +1,12 @@
 package org.example;
 
 public class GameLogic {
-
-    public static String gamaWord;
+    public static int counterOfChar = 0;
+    public static String gameWord;
     public static boolean[] isDone;
     public static boolean win = false;
     public static int counterFails = 0;
+    public static boolean flagOfWord = false;
 
     public static boolean checkInputWord(String string){
         for (int i = 0; i < string.length(); i++){

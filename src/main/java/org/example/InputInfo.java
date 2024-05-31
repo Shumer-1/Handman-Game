@@ -2,13 +2,11 @@ package org.example;
 
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
-import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
@@ -35,21 +33,28 @@ public class InputInfo {
         button.setLayoutY(204);
         button.setLayoutX(1000);
         button.setOnAction(event->{
-            gamaWord = textField.getText();
+            gameWord = textField.getText();
             label.setText("Отлично, слово принято!");
             root.getChildren().remove(textField);
             root.getChildren().remove(button);
             PauseTransition delay = new PauseTransition(Duration.seconds(2));
             delay.setOnFinished(wait -> {
+                flagOfWord = true;
                 root.getChildren().remove(label);
+                gameWindow();
             });
             delay.play();
+
         });
         root.getChildren().add(label);
         root.getChildren().add(textField);
         root.getChildren().add(button);
     }
 
+    private static void inputChar(){
+        Label label = new Label("Игрок " + secondUserName + " введите символ");
+
+    }
 
     public static void inputFirstName(){
         Label label = new Label("Введите ваше имя:");

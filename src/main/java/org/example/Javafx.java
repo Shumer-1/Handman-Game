@@ -1,6 +1,7 @@
 package org.example;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -8,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -15,11 +17,13 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
+import static org.example.GameLogic.*;
 
 
 public class Javafx extends Application{
@@ -72,6 +76,48 @@ public class Javafx extends Application{
         //root.setStyle("-fx-background-color: lightblue;");
         InputInfo.inputFirstName();
         InputInfo.inputSecondName();
+       // gameWindow();
+    }
+
+    public static void gameWindow(){
+        Label label = new Label("Игрок" + secondUserName + "введите ОДНУ БУКВУ");
+        label.setLayoutX(1000);
+        label.setLayoutY(100);
+        label.setTextFill(Color.WHITE);
+        label.setFont(Font.font("Arial", 32));
+
+        TextField textField = new TextField();
+        textField.setLayoutX(1000);
+        textField.setLayoutY(140);
+        textField.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 30px;");
+        Button button = new Button("Подтвердить");
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white;");
+        button.setLayoutY(204);
+        button.setLayoutX(1000);
+        button.setOnAction(event->{
+            gameWord = textField.getText();
+            if (textField.getText().length() != 1 || !checkInputWord(gameWord)){
+                textField.clear();
+                PauseTransition delay = new PauseTransition(Duration.seconds(2));
+                Label label1 = new Label("Игрок " + secondUserName + " введите ОДНУ БУКВУ!!");
+                label1.setLayoutX(1000);
+                label1.setLayoutY(500);
+                label1.setTextFill(Color.RED);
+                label1.setFont(Font.font("Arial", 58));
+                root.getChildren().add(label1);
+                delay.setOnFinished(wait -> {
+                    root.getChildren().remove(label1);
+                });
+                delay.play();
+            }
+            label.setText("Отлично, буква принята! Давай еще");
+            textField.clear();
+//            root.getChildren().remove(textField);
+//            root.getChildren().remove(button);
+        });
+        root.getChildren().add(label);
+        root.getChildren().add(textField);
+        root.getChildren().add(button);
     }
 
     public static Button startWindow(){
